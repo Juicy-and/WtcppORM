@@ -86,6 +86,7 @@ public:
 		Wt::Dbo::field(a, count, "count");
 		Wt::Dbo::belongsTo(a, stock, "stock");
 	}
+
 };
 	
 
@@ -144,10 +145,21 @@ int main()
 		sale->data_sale = "2023-11-16";
 		session.add(std::move(sale));
 
-		Wt::Dbo::ptr<Publisher> pub = session.find<Publisher>().where("name = ?").bind("Eksmo");
-		std::cout << pub->name << std::endl;
 		
+		std::string result;
+		std::cin >> result;
 
+	
+			Wt::Dbo::collection<Wt::Dbo::ptr<Shop>> shops = session.find<Shop>();
+			for (const Wt::Dbo::ptr<Shop> shop : shops)
+			{
+				for (const Wt::Dbo::ptr<Stock> stock : shop->stock)
+				{
+					if (stock->book->publisher->name == "Eksmo");
+
+				}
+				std::cout << shop->name << std::endl;
+			}
 		std::cout << "OK!" << std::endl;
 	}
 	catch (const std::exception& e)
